@@ -16,11 +16,12 @@ import { cn } from '@/lib/utils';
 
 interface LayoutProps {
   children: React.ReactNode;
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, activeTab = 'dashboard', onTabChange }: LayoutProps) {
   const { user, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState('dashboard');
 
   if (!user) return null;
 
@@ -31,6 +32,8 @@ export function Layout({ children }: LayoutProps) {
     { id: 'dashboard', label: 'Главная', icon: '🏠' },
     { id: 'catalog', label: 'Каталог льгот', icon: '🛍️' },
     { id: 'history', label: 'История', icon: '📊' },
+    { id: 'profile', label: 'Профиль', icon: '👤' },
+    { id: 'settings', label: 'Настройки', icon: '⚙️' },
   ];
 
   const hrTabs = [
@@ -61,9 +64,11 @@ export function Layout({ children }: LayoutProps) {
 
             {/* User Menu */}
             <div className="flex items-center space-x-4">
-              <Badge variant={isEmployee ? "default" : "secondary"} className="hidden sm:block">
-                {isEmployee ? 'Сотрудник' : 'HR-менеджер'}
-              </Badge>
+              {isEmployee && (
+                <Badge variant="default" className="hidden sm:block">
+                  {user.pointsBalance?.toLocaleString('ru-RU')} баллов
+                </Badge>
+              )}
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -84,13 +89,17 @@ export function Layout({ children }: LayoutProps) {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    Профиль
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    Настройки
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
+                  {isEmployee && (
+                    <>
+                      <DropdownMenuItem onClick={() => onTabChange?.('profile')}>
+                        Профиль
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onTabChange?.('settings')}>
+                        Настройки
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
                   <DropdownMenuItem onClick={logout}>
                     Выйти
                   </DropdownMenuItem>
@@ -108,7 +117,7 @@ export function Layout({ children }: LayoutProps) {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => onTabChange?.(tab.id)}
                 className={cn(
                   "flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors",
                   activeTab === tab.id
