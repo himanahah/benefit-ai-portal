@@ -1,4 +1,3 @@
-
 export interface User {
   id: string;
   email: string;
@@ -7,6 +6,7 @@ export interface User {
   department?: string;
   pointsBalance: number;
   avatar?: string;
+  password?: string;
 }
 
 export interface BenefitCategory {

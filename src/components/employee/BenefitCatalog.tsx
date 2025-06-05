@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +6,7 @@ import { benefitCategories } from '@/data/mockData';
 import { formatNumber } from '@/lib/utils';
 
 export function BenefitCatalog() {
+  const [selected, setSelected] = useState(null);
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -20,7 +20,6 @@ export function BenefitCatalog() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {benefitCategories.map((category) => {
           const usagePercent = (category.usedPoints / category.totalLimit) * 100;
-          
           return (
             <Card key={category.id} className="hover:shadow-md transition-shadow">
               <CardHeader>
@@ -52,13 +51,11 @@ export function BenefitCatalog() {
                       <span>{formatNumber(category.totalLimit)}</span>
                     </div>
                   </div>
-                  
                   <div className="text-sm">
                     <p><strong>Партнеры:</strong> {category.providers.length}</p>
                     <p><strong>Доступно:</strong> {formatNumber(category.totalLimit - category.usedPoints)} баллов</p>
                   </div>
-                  
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full" onClick={() => setSelected(category)}>
                     Подробнее
                   </Button>
                 </div>
@@ -67,6 +64,49 @@ export function BenefitCatalog() {
           );
         })}
       </div>
+      {selected && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-8 relative">
+            <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl" onClick={() => setSelected(null)}>&times;</button>
+            <div className="flex items-center gap-4 mb-4">
+              <div className={`w-14 h-14 ${selected.color} rounded-lg flex items-center justify-center text-white text-2xl`}>{selected.icon}</div>
+              <div>
+                <h2 className="text-2xl font-bold mb-1">{selected.name}</h2>
+                <div className="text-gray-600">{selected.description}</div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="font-semibold mb-1">Партнеры:</div>
+              <ul className="space-y-2">
+                {selected.providers.map((p) => (
+                  <li key={p.id} className="flex items-center gap-3">
+                    <img src={p.logo} alt={p.name} className="w-8 h-8 rounded" />
+                    <div>
+                      <div className="font-medium">{p.name}</div>
+                      <div className="text-xs text-gray-500">{p.description}</div>
+                      <div className="text-xs text-gray-400">Мин. баллов: {p.minPoints}, Макс. баллов: {p.maxPoints}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex gap-4">
+              <div>
+                <div className="text-xs text-gray-500">Лимит</div>
+                <div className="font-bold">{formatNumber(selected.totalLimit)}</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-500">Использовано</div>
+                <div className="font-bold">{formatNumber(selected.usedPoints)}</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-500">Доступно</div>
+                <div className="font-bold">{formatNumber(selected.totalLimit - selected.usedPoints)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

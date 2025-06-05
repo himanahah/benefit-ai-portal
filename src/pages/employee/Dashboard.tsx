@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
@@ -24,14 +23,13 @@ const Dashboard = () => {
   return (
     <div className="p-6 space-y-6">
       {/* Page Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row gap-4 items-center mb-4">
+        <img src={user?.avatar} alt="avatar" className="w-20 h-20 rounded-full border" />
         <div>
           <h1 className="text-2xl font-bold">Добро пожаловать, {user?.name}! 👋</h1>
-          <p className="text-gray-600">Управляйте своими корпоративными льготами</p>
+          <p className="text-gray-600">Email: {user?.email}</p>
+          <p className="text-gray-600">Отдел: {user?.department}</p>
         </div>
-        <Button onClick={() => navigate('/employee/allocate')}>
-          Распределить баллы
-        </Button>
       </div>
 
       {/* Key Metrics */}
@@ -201,6 +199,11 @@ const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="flex items-center gap-4 cursor-pointer mb-6" onClick={() => navigate('/') }>
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">B</div>
+        <span className="text-xl font-bold">Benefit Admin AI</span>
       </div>
     </div>
   );

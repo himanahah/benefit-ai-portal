@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -123,9 +122,7 @@ const PointsAllocator = () => {
           </div>
           <div className="flex justify-between items-center">
             <span>Остаток:</span>
-            <span className={`font-bold text-2xl ${remaining < 0 ? 'text-red-600' : 'text-green-600'}`}>
-              {formatNumber(remaining)}
-            </span>
+            <span className={`font-bold text-2xl ${remaining < 0 ? 'text-red-600' : 'text-green-600'}`}>{formatNumber(remaining)}</span>
           </div>
           <Progress value={(totalAllocated / totalAvailable) * 100} className="mt-4" />
         </CardContent>
@@ -135,10 +132,8 @@ const PointsAllocator = () => {
         {selectedCategories.map((categoryId) => {
           const category = benefitCategories.find(c => c.id === categoryId);
           if (!category) return null;
-
           const currentAllocation = allocations[categoryId] || 0;
-          const maxAllocation = Math.min(category.totalLimit, remaining + currentAllocation);
-
+          const maxAllocation = category.totalLimit;
           return (
             <Card key={categoryId}>
               <CardHeader>
@@ -158,9 +153,7 @@ const PointsAllocator = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label>Распределить баллов</Label>
-                    <span className="text-sm font-medium">
-                      {formatNumber(currentAllocation)}
-                    </span>
+                    <span className="text-sm font-medium">{formatNumber(currentAllocation)}</span>
                   </div>
                   <Slider
                     value={[currentAllocation]}
@@ -174,7 +167,6 @@ const PointsAllocator = () => {
                     <span>{formatNumber(maxAllocation)}</span>
                   </div>
                 </div>
-
                 <div className="flex space-x-2">
                   <Input
                     type="number"
@@ -196,16 +188,15 @@ const PointsAllocator = () => {
           );
         })}
       </div>
-
+      {remaining < 0 && (
+        <div className="text-red-600 text-center font-semibold">Сумма превышает доступный баланс!</div>
+      )}
       <div className="flex justify-between">
         <Button variant="outline" onClick={() => setCurrentStep(1)}>
           Назад
         </Button>
-        <Button 
-          onClick={() => setCurrentStep(3)}
-          disabled={remaining < 0 || totalAllocated === 0}
-        >
-          Далее
+        <Button onClick={handleConfirm} disabled={remaining < 0}>
+          Подтвердить
         </Button>
       </div>
     </div>
