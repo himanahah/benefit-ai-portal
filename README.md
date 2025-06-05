@@ -1,73 +1,75 @@
-# Welcome to your Lovable project
+# Benefit AI Portal
 
-## Project info
+Benefit AI Portal — это инновационная платформа, созданная для автоматизации и оптимизации процессов взаимодействия между работодателями, сотрудниками и поставщиками товаров и услуг. 
+Проект разработан командой: Симоновым Даниилом, Анастасией Химич и Александровой Елизаветой.
 
-**URL**: https://lovable.dev/projects/c49ae499-c782-489b-af2b-d1103b4db00a
+---
 
-## How can I edit this code?
+## Описание проекта и решаемые задачи
 
-There are several ways of editing your application.
+Benefit AI Portal предназначен для упрощения и повышения эффективности управления бизнес-процессами с использованием современных технологий искусственного интеллекта. Платформа предлагает разные уровни доступа и представления для различных категорий пользователей:
 
-**Use Lovable**
+- **Работодатели** получают удобные инструменты для управления персоналом и контроля бизнес-процессов.
+- **Сотрудники** могут оперативно получать необходимую информацию и взаимодействовать с системой.
+- **Поставщики товаров и услуг** имеют специализированный интерфейс для работы с заказами и поставками.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c49ae499-c782-489b-af2b-d1103b4db00a) and start prompting.
+Основные задачи, которые решает Benefit AI Portal:
 
-Changes made via Lovable will be committed automatically to this repo.
+- Централизация и автоматизация бизнес-коммуникаций и документооборота.
+- Повышение прозрачности и контроля над процессами.
+- Оптимизация взаимодействия между всеми участниками экосистемы.
+- Ускорение принятия решений за счет анализа данных и AI-поддержки.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Основные функции платформы
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Benefit AI Portal включает в себя следующие ключевые функциональные возможности:
 
-Follow these steps:
+- **Многоуровневый доступ и кастомизация интерфейса**  
+  Каждый тип пользователя видит только релевантную информацию и функции, что повышает удобство и безопасность работы.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- **Интеллектуальный анализ данных и отчетность**  
+  Система собирает и обрабатывает данные, предоставляя аналитические отчеты и рекомендации для принятия решений.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- **Интеграция с внешними сервисами**  
+  Платформа поддерживает подключение к сторонним системам для расширения функционала и автоматизации обмена данными.
 
-# Step 3: Install the necessary dependencies.
-npm i
+- **Управление заказами и поставками**  
+  Поставщики могут быстро оформлять и отслеживать заказы, а работодатели контролировать процесс снабжения.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+- **Обратная связь и коммуникация**  
+  Встроенные инструменты для общения между всеми участниками платформы, включая уведомления и оповещения.
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Используемые технологии
 
-**Use GitHub Codespaces**
+Benefit AI Portal построен на современном технологическом стеке, который обеспечивает высокую производительность, масштабируемость и удобство разработки:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **React 18** — для создания интерактивного и отзывчивого пользовательского интерфейса.
+- **TypeScript** — для строгой типизации и повышения надежности кода.
+- **Vite** — современный сборщик, обеспечивающий быструю разработку и сборку проекта.
+- **Tailwind CSS** — утилитарный CSS-фреймворк для гибкой и быстрой стилизации компонентов.
+- **shadcn-ui** — библиотека UI-компонентов, обеспечивающая единый стиль и удобство использования.
+- **Интеграция с AI-модулями** — для интеллектуальной обработки данных и поддержки принятия решений.
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Преимущества и уникальность
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Гибкость и масштабируемость**  
+  Платформа легко адаптируется под разные бизнес-модели и масштабы компаний.
 
-## How can I deploy this project?
+- **Интеллектуальная поддержка**  
+  Использование AI позволяет автоматизировать рутинные задачи и улучшить качество управления.
 
-Simply open [Lovable](https://lovable.dev/projects/c49ae499-c782-489b-af2b-d1103b4db00a) and click on Share -> Publish.
+- **Безопасность и разграничение доступа**  
+  Многоуровневая система прав обеспечивает защиту данных и контроль за действиями пользователей.
 
-## Can I connect a custom domain to my Lovable project?
+- **Удобство и простота использования**  
+  Современный интерфейс и продуманная логика работы делают платформу доступной для пользователей с разным уровнем технической подготовки.
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Benefit AI Portal — это комплексное решение, которое помогает бизнесу эффективно управлять ресурсами, улучшать коммуникацию и использовать возможности искусственного интеллекта для достижения новых высот в работе.
