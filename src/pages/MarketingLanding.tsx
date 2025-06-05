@@ -1,10 +1,10 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 
 const MarketingLanding = () => {
   const navigate = useNavigate();
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
@@ -22,7 +22,10 @@ const MarketingLanding = () => {
               <Button variant="outline" onClick={() => navigate('/login')}>
                 Войти
               </Button>
-              <Button onClick={() => navigate('/login')}>
+              <Button variant="secondary" onClick={() => navigate('/register')}>
+                Регистрация
+              </Button>
+              <Button onClick={() => navigate('/demo')}>
                 Демо
               </Button>
             </div>
@@ -45,7 +48,7 @@ const MarketingLanding = () => {
             <Button size="lg" onClick={() => navigate('/login')}>
               Начать работу
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" onClick={() => navigate('/about')}>
               Узнать больше
             </Button>
           </div>
@@ -149,7 +152,7 @@ const MarketingLanding = () => {
               <span className="font-semibold">Benefit Admin AI</span>
             </div>
             <div className="text-sm text-gray-400">
-              © 2024 Benefit Admin AI. Все права защищены.
+              © 2025 Benefit Admin AI. Все права защищены.
             </div>
           </div>
         </div>

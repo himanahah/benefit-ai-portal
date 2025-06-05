@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -25,15 +24,13 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      await login(email, password);
-      
-      // Redirect based on user role after successful login
-      if (email === 'employee@company.com') {
+      const role = await login(email, password);
+      if (role === 'employee') {
         navigate('/employee/dashboard');
-      } else if (email === 'hr@company.com') {
+      } else if (role === 'hr') {
         navigate('/hr/dashboard');
       } else {
-        navigate(from);
+        navigate('/');
       }
     } catch (error) {
       toast({
@@ -43,16 +40,6 @@ const Auth = () => {
       });
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleDemoLogin = (role: 'employee' | 'hr') => {
-    if (role === 'employee') {
-      setEmail('employee@company.com');
-      setPassword('password');
-    } else {
-      setEmail('hr@company.com');
-      setPassword('password');
     }
   };
 
@@ -110,34 +97,17 @@ const Auth = () => {
                 {isLoading ? 'Вход...' : 'Войти'}
               </Button>
             </form>
-
-            {/* Demo Logins */}
-            <div className="mt-6 pt-6 border-t">
-              <p className="text-sm text-gray-600 text-center mb-4">
-                Демо-аккаунты:
-              </p>
-              <div className="space-y-2">
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  onClick={() => handleDemoLogin('employee')}
-                >
-                  👤 Демо сотрудника
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  onClick={() => handleDemoLogin('hr')}
-                >
-                  🧑‍💼 Демо HR-менеджера
-                </Button>
-              </div>
-            </div>
           </CardContent>
         </Card>
 
         {/* Back to home */}
         <div className="text-center">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/register')}
+          >
+            Зарегистрироваться
+          </Button>
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
