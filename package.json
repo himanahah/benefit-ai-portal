@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://benefit-ai-portal.github.io",
+  "homepage": "https://himanahah.github.io/benefit-ai-portal",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
