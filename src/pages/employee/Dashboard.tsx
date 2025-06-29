@@ -86,7 +86,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-600">
-              {daysUntilReset}
+              {Math.abs(daysUntilReset)}
             </div>
             <p className="text-xs text-muted-foreground">
               дней осталось
@@ -193,7 +193,7 @@ const Dashboard = () => {
                 <p className="text-sm">Эта категория используется меньше всего</p>
               </div>
               <div className="p-3 bg-orange-100 rounded-lg">
-                <p className="font-medium">До обновления осталось {daysUntilReset} дней</p>
+                <p className="font-medium">До обновления осталось {Math.abs(daysUntilReset)} дней</p>
                 <p className="text-sm">Рекомендуем использовать баллы до 1 июля</p>
               </div>
             </div>
@@ -202,7 +202,7 @@ const Dashboard = () => {
       </div>
 
       <div className="flex items-center gap-4 cursor-pointer mb-6" onClick={() => navigate('/') }>
-        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">B</div>
+        <div className="w-8 h-8 bg-gradient-to-br from-[#6AFCBA] to-[#B6D9FC] rounded-lg flex items-center justify-center text-white font-bold">B</div>
         <span className="text-xl font-bold">Benefit Admin AI</span>
       </div>
     </div>

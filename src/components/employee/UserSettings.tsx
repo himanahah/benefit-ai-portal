@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -206,55 +205,6 @@ export function UserSettings() {
             <Button onClick={handleChangePassword}>
               Изменить пароль
             </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Integrations */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Интеграции</CardTitle>
-          <CardDescription>Подключение к внешним сервисам</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-3">
-            {Object.entries(integrations).map(([service, connected]) => {
-              const serviceNames = {
-                yandexTaxi: 'Яндекс.Такси',
-                deliveryClub: 'Delivery Club',
-                carsharing: 'Каршеринг'
-              };
-
-              return (
-                <div key={service} className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                      <span className="text-sm">🔗</span>
-                    </div>
-                    <div>
-                      <p className="font-medium">
-                        {serviceNames[service as keyof typeof serviceNames]}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        {connected ? 'Подключено' : 'Не подключено'}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge variant={connected ? "default" : "secondary"}>
-                      {connected ? 'Активно' : 'Неактивно'}
-                    </Badge>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleToggleIntegration(service)}
-                    >
-                      {connected ? 'Отключить' : 'Подключить'}
-                    </Button>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </CardContent>
       </Card>

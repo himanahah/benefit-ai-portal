@@ -1,4 +1,3 @@
-
 import { BenefitCatalog as BenefitCatalogComponent } from '@/components/employee/BenefitCatalog';
 
 const BenefitCatalog = () => {

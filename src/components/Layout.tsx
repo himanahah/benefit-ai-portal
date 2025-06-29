@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -53,7 +52,7 @@ export function Layout({ children, activeTab = 'dashboard', onTabChange }: Layou
           <div className="flex justify-between items-center h-16">
             {/* Logo and Title */}
             <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+              <div className="w-8 h-8 bg-gradient-to-br from-[#6AFCBA] to-[#B6D9FC] rounded-lg flex items-center justify-center text-white font-bold">
                 B
               </div>
               <div>
@@ -121,7 +120,7 @@ export function Layout({ children, activeTab = 'dashboard', onTabChange }: Layou
                 className={cn(
                   "flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors",
                   activeTab === tab.id
-                    ? "border-blue-500 text-blue-600"
+                    ? "border-[#1D92C5] text-[#1D92C5]"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 )}
               >

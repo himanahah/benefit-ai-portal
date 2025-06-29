@@ -7,13 +7,13 @@ const MarketingLanding = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#6AFCBA] to-[#B6D9FC]">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+              <div className="w-8 h-8 bg-gradient-to-br from-[#6AFCBA] to-[#B6D9FC] rounded-lg flex items-center justify-center text-white font-bold">
                 B
               </div>
               <h1 className="text-xl font-bold">Benefit Admin AI</h1>
@@ -45,7 +45,11 @@ const MarketingLanding = () => {
             Кафетерий льгот с ИИ-аналитикой и персональными рекомендациями.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" onClick={() => navigate('/login')}>
+            <Button 
+              size="lg" 
+              className="bg-[#82C4F8] text-white hover:bg-[#1D92C5]"
+              onClick={() => navigate('/login')}
+            >
               Начать работу
             </Button>
             <Button variant="outline" size="lg" onClick={() => navigate('/about')}>
@@ -124,7 +128,7 @@ const MarketingLanding = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-[#6AFCBA] to-[#B6D9FC] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">Готовы начать?</h2>
           <p className="text-xl mb-8 opacity-90">
@@ -133,7 +137,7 @@ const MarketingLanding = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="bg-white text-blue-600 hover:bg-gray-100"
+            className="bg-[#82C4F8] text-white hover:bg-[#1D92C5]"
             onClick={() => navigate('/login')}
           >
             Войти в систему
@@ -146,7 +150,7 @@ const MarketingLanding = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+              <div className="w-8 h-8 bg-gradient-to-br from-[#6AFCBA] to-[#B6D9FC] rounded-lg flex items-center justify-center text-white font-bold">
                 B
               </div>
               <span className="font-semibold">Benefit Admin AI</span>

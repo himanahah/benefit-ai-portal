@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -13,6 +12,7 @@ const menuItems = [
   { id: 'allocate', label: 'Распределить баллы', icon: '⚖️', path: '/employee/allocate' },
   { id: 'history', label: 'История', icon: '📊', path: '/employee/history' },
   { id: 'support', label: 'Поддержка', icon: '💬', path: '/employee/support' },
+  { id: 'satisfaction', label: 'Удовлетворенность', icon: () => (<span className='text-2xl' style={{color:'#6AFCBA'}}>🙂</span>), path: '/employee/satisfaction' },
   { id: 'settings', label: 'Настройки', icon: '⚙️', path: '/employee/settings' },
 ];
 
@@ -31,7 +31,7 @@ export function EmployeeSidebar() {
       {/* Header */}
       <div className="p-4 border-b">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+          <div className="w-8 h-8 bg-gradient-to-br from-[#6AFCBA] to-[#B6D9FC] rounded-lg flex items-center justify-center text-white font-bold">
             B
           </div>
           {!isCollapsed && (
