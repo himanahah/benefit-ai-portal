@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -17,7 +16,7 @@ export function EmployeeDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg">
+      <div className="bg-gradient-to-r from-[#6AFCBA] to-[#B6D9FC] text-white p-6 rounded-lg">
         <h1 className="text-2xl font-bold">Добро пожаловать, {user?.name}! 👋</h1>
         <p className="text-blue-100 mt-1">Управляйте своими корпоративными льготами</p>
       </div>
