@@ -40,6 +40,8 @@ const PointsAllocator = () => {
   };
 
   const handleConfirm = () => {
+    // Сохраняем лимиты распределения в БД (localStorage)
+    localStorage.setItem('benefit-allocations', JSON.stringify(allocations));
     toast({
       title: "Распределение сохранено",
       description: `Баллы успешно распределены по ${selectedCategories.length} категориям.`,

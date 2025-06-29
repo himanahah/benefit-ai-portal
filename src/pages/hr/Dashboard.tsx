@@ -1,10 +1,59 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const HrOverview = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handleExportReport = () => {
+    toast({
+      title: "Экспорт запущен",
+      description: "Отчёт будет загружен в течение нескольких секунд.",
+    });
+    
+    // Имитация загрузки файла
+    setTimeout(() => {
+      toast({
+        title: "Отчёт готов",
+        description: "Файл HR_report_2024.xlsx загружен успешно.",
+      });
+    }, 2000);
+  };
+
+  const handleSettings = () => {
+    toast({
+      title: "Переход к настройкам",
+      description: "Открываю страницу настройки лимитов льгот.",
+    });
+    
+    // Имитация перехода (в реальном приложении здесь был бы navigate)
+    setTimeout(() => {
+      toast({
+        title: "Настройки открыты",
+        description: "Вы можете настроить лимиты для всех категорий льгот.",
+      });
+    }, 1000);
+  };
+
+  const handleImport = () => {
+    toast({
+      title: "Переход к импорту",
+      description: "Открываю страницу импорта данных.",
+    });
+    
+    // Имитация перехода (в реальном приложении здесь был бы navigate)
+    setTimeout(() => {
+      toast({
+        title: "Импорт открыт",
+        description: "Вы можете загрузить CSV или Excel файлы для обновления данных.",
+      });
+    }, 1000);
+  };
+
   return (
     <div className="space-y-6 p-6">
       <div>
@@ -105,19 +154,31 @@ const HrOverview = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="h-auto py-4">
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 hover:shadow-md transition-shadow"
+              onClick={handleExportReport}
+            >
               <div className="text-center">
                 <div className="text-2xl mb-2">📊</div>
                 <div>Экспорт отчёта</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-auto py-4">
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 hover:shadow-md transition-shadow"
+              onClick={handleSettings}
+            >
               <div className="text-center">
                 <div className="text-2xl mb-2">⚙️</div>
                 <div>Настройка лимитов</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-auto py-4">
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 hover:shadow-md transition-shadow"
+              onClick={handleImport}
+            >
               <div className="text-center">
                 <div className="text-2xl mb-2">📥</div>
                 <div>Импорт данных</div>

@@ -1,8 +1,8 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
 
 interface Recommendation {
   id: string;
@@ -18,17 +18,17 @@ const mockRecommendations: Recommendation[] = [
   {
     id: '1',
     type: 'optimization',
-    title: 'Увеличить лимит на транспорт для отдела продаж',
-    description: 'Анализ показывает, что сотрудники отдела продаж исчерпывают лимит на транспорт на 23% раньше других отделов. Рекомендуется увеличить лимит на 15%.',
+    title: 'Оптимизация бюджета на топливо',
+    description: 'Анализ показывает, что 15% сотрудников превышают лимиты на топливо. Рекомендуется увеличить лимиты на 20% для этой категории.',
     impact: 'high',
-    confidence: 87,
+    confidence: 92,
     actionable: true
   },
   {
     id: '2',
     type: 'alert',
-    title: 'Аномальная активность пользователя',
-    description: 'Пользователь ivan.petrov@company.com потратил 150% от обычной суммы за последние 7 дней. Рекомендуется проверить транзакции.',
+    title: 'Аномальное использование льгот',
+    description: 'Обнаружены необычные паттерны использования льгот в отделе продаж. Рекомендуется провести аудит.',
     impact: 'high',
     confidence: 94,
     actionable: true
@@ -45,6 +45,44 @@ const mockRecommendations: Recommendation[] = [
 ];
 
 const AiInsights = () => {
+  const { toast } = useToast();
+
+  const handleRefreshAnalysis = () => {
+    toast({
+      title: "Анализ запущен",
+      description: "ИИ обрабатывает новые данные и генерирует рекомендации...",
+    });
+    
+    // Имитация обновления анализа
+    setTimeout(() => {
+      toast({
+        title: "Анализ завершён",
+        description: "Обнаружено 2 новые рекомендации для рассмотрения.",
+      });
+    }, 3000);
+  };
+
+  const handleApply = (rec: Recommendation) => {
+    toast({
+      title: "Рекомендация применена",
+      description: `Рекомендация "${rec.title}" успешно применена к системе.`,
+    });
+  };
+
+  const handleDetails = (rec: Recommendation) => {
+    toast({
+      title: "Детали рекомендации",
+      description: `Открываю подробную информацию о рекомендации ID: ${rec.id}`,
+    });
+  };
+
+  const handleReject = (rec: Recommendation) => {
+    toast({
+      title: "Рекомендация отклонена",
+      description: `Рекомендация "${rec.title}" отклонена и больше не будет показываться.`,
+    });
+  };
+
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'optimization': return 'bg-blue-100 text-blue-800';
@@ -90,7 +128,7 @@ const AiInsights = () => {
         </div>
         <div className="flex space-x-2">
           <Badge variant="secondary">Beta</Badge>
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleRefreshAnalysis}>
             Обновить анализ
           </Button>
         </div>
@@ -157,7 +195,7 @@ const AiInsights = () => {
         <CardContent>
           <div className="space-y-6">
             {mockRecommendations.map((rec) => (
-              <div key={rec.id} className="border rounded-lg p-6">
+              <div key={rec.id} className="border rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center space-x-3">
                     <Badge className={getTypeColor(rec.type)}>
@@ -171,7 +209,10 @@ const AiInsights = () => {
                     </Badge>
                   </div>
                   {rec.actionable && (
-                    <Button size="sm">
+                    <Button 
+                      size="sm"
+                      onClick={() => handleApply(rec)}
+                    >
                       Применить
                     </Button>
                   )}
@@ -182,10 +223,18 @@ const AiInsights = () => {
 
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-2">
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleDetails(rec)}
+                    >
                       Подробнее
                     </Button>
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleReject(rec)}
+                    >
                       Отклонить
                     </Button>
                   </div>

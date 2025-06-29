@@ -1,9 +1,8 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
 interface ImportJob {
@@ -40,6 +39,9 @@ const mockJobs: ImportJob[] = [
 const DataImport = () => {
   const [jobs, setJobs] = useState(mockJobs);
   const [dragActive, setDragActive] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   const handleDrag = (e: React.DragEvent) => {
@@ -59,8 +61,37 @@ const DataImport = () => {
     
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
-      handleFileUpload(file);
+      setSelectedFile(file);
     }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+    }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleUpload = () => {
+    if (!selectedFile) return;
+
+    setIsUploading(true);
+    
+    // Имитация загрузки файла на сервер
+    setTimeout(() => {
+      handleFileUpload(selectedFile);
+      setSelectedFile(null);
+      setIsUploading(false);
+      
+      toast({
+        title: "Файл успешно загружен",
+        description: `Файл ${selectedFile.name} отправлен на сервер и добавлен в очередь обработки`,
+      });
+    }, 1500);
   };
 
   const handleFileUpload = (file: File) => {
@@ -75,20 +106,88 @@ const DataImport = () => {
     };
 
     setJobs(prev => [newJob, ...prev]);
-    
-    toast({
-      title: "Файл загружен",
-      description: `Файл ${file.name} добавлен в очередь обработки`,
-    });
 
-    // Simulate processing
+    // Имитация обработки файла на сервере
     setTimeout(() => {
       setJobs(prev => prev.map(job => 
         job.id === newJob.id 
-          ? { ...job, status: 'processing', recordsTotal: 500 }
+          ? { ...job, status: 'processing', recordsTotal: Math.floor(Math.random() * 1000) + 100 }
           : job
       ));
-    }, 1000);
+    }, 2000);
+
+    // Имитация завершения обработки
+    setTimeout(() => {
+      setJobs(prev => prev.map(job => 
+        job.id === newJob.id 
+          ? { 
+              ...job, 
+              status: 'completed', 
+              progress: 100,
+              recordsProcessed: job.recordsTotal
+            }
+          : job
+      ));
+    }, 8000);
+  };
+
+  const handleDownloadTemplate = (templateType: string) => {
+    const templates = {
+      employees: 'employees_template.xlsx',
+      benefits: 'benefits_template.xlsx',
+      allocations: 'allocations_template.xlsx'
+    };
+    
+    toast({
+      title: "Скачивание шаблона",
+      description: `Файл ${templates[templateType as keyof typeof templates]} загружается...`,
+    });
+    
+    // Имитация скачивания файла
+    setTimeout(() => {
+      toast({
+        title: "Шаблон загружен",
+        description: `Файл ${templates[templateType as keyof typeof templates]} успешно скачан.`,
+      });
+    }, 1500);
+  };
+
+  const handleDownloadReport = (job: ImportJob) => {
+    toast({
+      title: "Скачивание отчёта",
+      description: `Отчёт по файлу ${job.fileName} загружается...`,
+    });
+    
+    // Имитация скачивания отчёта
+    setTimeout(() => {
+      toast({
+        title: "Отчёт загружен",
+        description: `Файл report_${job.fileName} успешно скачан.`,
+      });
+    }, 1500);
+  };
+
+  const handleRetry = (job: ImportJob) => {
+    toast({
+      title: "Повторная обработка",
+      description: `Файл ${job.fileName} добавлен в очередь для повторной обработки.`,
+    });
+    
+    // Имитация повторной обработки
+    setJobs(prev => prev.map(j => 
+      j.id === job.id 
+        ? { ...j, status: 'pending', progress: 0 }
+        : j
+    ));
+  };
+
+  const handleDelete = (jobId: string) => {
+    toast({
+      title: "Удаление задачи",
+      description: "Задача удалена из очереди обработки.",
+    });
+    
+    setJobs(prev => prev.filter(j => j.id !== jobId));
   };
 
   const getStatusColor = (status: string) => {
@@ -145,25 +244,75 @@ const DataImport = () => {
             <p className="text-gray-600 mb-4">
               Максимальный размер файла: 10MB
             </p>
-            <Button variant="outline">
-              Выбрать файлы
+            
+            {/* Скрытый input для выбора файла */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".csv,.xlsx,.xls"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            
+            <Button 
+              variant="outline" 
+              onClick={handleUploadClick}
+              disabled={isUploading}
+            >
+              {isUploading ? 'Загрузка...' : 'Выбрать файлы'}
             </Button>
           </div>
 
+          {/* Отображение выбранного файла */}
+          {selectedFile && (
+            <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="text-2xl">📄</div>
+                  <div>
+                    <p className="font-medium">{selectedFile.name}</p>
+                    <p className="text-sm text-gray-600">
+                      Размер: {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
+                  </div>
+                </div>
+                <Button 
+                  onClick={handleUpload}
+                  disabled={isUploading}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  {isUploading ? 'Загружается...' : 'Загрузить'}
+                </Button>
+              </div>
+            </div>
+          )}
+
           <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="h-auto py-4">
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 hover:shadow-md transition-shadow"
+              onClick={() => handleDownloadTemplate('employees')}
+            >
               <div className="text-center">
                 <div className="text-2xl mb-2">👥</div>
                 <div>Шаблон сотрудников</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-auto py-4">
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 hover:shadow-md transition-shadow"
+              onClick={() => handleDownloadTemplate('benefits')}
+            >
               <div className="text-center">
                 <div className="text-2xl mb-2">🎁</div>
                 <div>Шаблон льгот</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-auto py-4">
+            <Button 
+              variant="outline" 
+              className="h-auto py-4 hover:shadow-md transition-shadow"
+              onClick={() => handleDownloadTemplate('allocations')}
+            >
               <div className="text-center">
                 <div className="text-2xl mb-2">💰</div>
                 <div>Шаблон начислений</div>
@@ -184,7 +333,7 @@ const DataImport = () => {
         <CardContent>
           <div className="space-y-4">
             {jobs.map((job) => (
-              <div key={job.id} className="border rounded-lg p-4">
+              <div key={job.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="font-medium">{job.fileName}</h3>
@@ -213,16 +362,28 @@ const DataImport = () => {
 
                 <div className="flex justify-end space-x-2 mt-3">
                   {job.status === 'completed' && (
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleDownloadReport(job)}
+                    >
                       Скачать отчёт
                     </Button>
                   )}
                   {job.status === 'failed' && (
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleRetry(job)}
+                    >
                       Повторить
                     </Button>
                   )}
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleDelete(job.id)}
+                  >
                     Удалить
                   </Button>
                 </div>

@@ -12,6 +12,13 @@ import { formatNumber } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
 export function BenefitHistory() {
+  // Получаем лимиты распределения из БД (localStorage)
+  let allocations: Record<string, number> = {};
+  try {
+    const saved = localStorage.getItem('benefit-allocations');
+    if (saved) allocations = JSON.parse(saved);
+  // eslint-disable-next-line no-empty
+  } catch {}
   const { toast } = useToast();
   const [periodFilter, setPeriodFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -123,10 +130,11 @@ export function BenefitHistory() {
       {/* Progress Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {benefitCategories.slice(0, 3).map((category) => {
-          const usagePercent = (category.usedPoints / category.totalLimit) * 100;
-          
+          // Если есть лимит из БД — используем его
+          const userLimit = allocations[category.id] ?? category.totalLimit;
+          const usagePercent = (category.usedPoints / userLimit) * 100;
           return (
-            <Card key={category.id}>
+            <Card key={category.id} className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-2">
                 <div className="flex items-center space-x-2">
                   <span className="text-xl">{category.icon}</span>
@@ -142,7 +150,7 @@ export function BenefitHistory() {
                   <Progress value={usagePercent} className="h-2" />
                   <div className="flex justify-between text-xs text-gray-500">
                     <span>{formatNumber(category.usedPoints)}</span>
-                    <span>{formatNumber(category.totalLimit)}</span>
+                    <span>{formatNumber(userLimit)}</span>
                   </div>
                 </div>
               </CardContent>
@@ -172,7 +180,8 @@ export function BenefitHistory() {
             <TableBody>
               {recentTransactions.map((transaction) => {
                 const category = benefitCategories.find(c => c.id === transaction.categoryId);
-                
+                // Если есть лимит из БД — используем его
+                const userLimit = allocations[category?.id ?? ''] ?? category?.totalLimit;
                 return (
                   <TableRow key={transaction.id}>
                     <TableCell>
@@ -210,7 +219,8 @@ export function BenefitHistory() {
           <div className="space-y-4">
             {recentTransactions.map((transaction, index) => {
               const category = benefitCategories.find(c => c.id === transaction.categoryId);
-              
+              // Если есть лимит из БД — используем его
+              const userLimit = allocations[category?.id ?? ''] ?? category?.totalLimit;
               return (
                 <div key={transaction.id} className="flex items-start space-x-4">
                   <div className="flex-shrink-0">

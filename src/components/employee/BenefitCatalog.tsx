@@ -6,6 +6,12 @@ import { benefitCategories } from '@/data/mockData';
 import { formatNumber } from '@/lib/utils';
 
 export function BenefitCatalog() {
+  // Получаем лимиты распределения из БД (localStorage)
+  let allocations: Record<string, number> = {};
+  try {
+    const saved = localStorage.getItem('benefit-allocations');
+    if (saved) allocations = JSON.parse(saved);
+  } catch {}
   const [selected, setSelected] = useState(null);
   return (
     <div className="space-y-6">
@@ -19,7 +25,9 @@ export function BenefitCatalog() {
       {/* Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {benefitCategories.map((category) => {
-          const usagePercent = (category.usedPoints / category.totalLimit) * 100;
+          // Если есть лимит из БД — используем его
+          const userLimit = allocations[category.id] ?? category.totalLimit;
+          const usagePercent = (category.usedPoints / userLimit) * 100;
           return (
             <Card key={category.id} className="hover:shadow-md transition-shadow">
               <CardHeader>
@@ -48,12 +56,12 @@ export function BenefitCatalog() {
                     </div>
                     <div className="flex justify-between text-xs text-gray-500 mt-1">
                       <span>{formatNumber(category.usedPoints)}</span>
-                      <span>{formatNumber(category.totalLimit)}</span>
+                      <span>{formatNumber(userLimit)}</span>
                     </div>
                   </div>
                   <div className="text-sm">
                     <p><strong>Партнеры:</strong> {category.providers.length}</p>
-                    <p><strong>Доступно:</strong> {formatNumber(category.totalLimit - category.usedPoints)} баллов</p>
+                    <p><strong>Доступно:</strong> {formatNumber(userLimit - category.usedPoints)} баллов</p>
                   </div>
                   <Button variant="outline" className="w-full" onClick={() => setSelected(category)}>
                     Подробнее
@@ -93,7 +101,7 @@ export function BenefitCatalog() {
             <div className="flex gap-4">
               <div>
                 <div className="text-xs text-gray-500">Лимит</div>
-                <div className="font-bold">{formatNumber(selected.totalLimit)}</div>
+                <div className="font-bold">{formatNumber(allocations[selected.id] ?? selected.totalLimit)}</div>
               </div>
               <div>
                 <div className="text-xs text-gray-500">Использовано</div>
@@ -101,7 +109,7 @@ export function BenefitCatalog() {
               </div>
               <div>
                 <div className="text-xs text-gray-500">Доступно</div>
-                <div className="font-bold">{formatNumber(selected.totalLimit - selected.usedPoints)}</div>
+                <div className="font-bold">{formatNumber((allocations[selected.id] ?? selected.totalLimit) - selected.usedPoints)}</div>
               </div>
             </div>
           </div>

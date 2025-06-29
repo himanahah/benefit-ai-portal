@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,6 +17,29 @@ const HrSettings = () => {
     toast({
       title: "Настройки сохранены",
       description: "Изменения применены успешно",
+    });
+  };
+
+  const handleGenerateApiKey = () => {
+    const newKey = 'sk-proj-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    setApiKey(newKey);
+    toast({
+      title: "API ключ сгенерирован",
+      description: "Новый ключ создан и сохранён в системе.",
+    });
+  };
+
+  const handleEditUser = (userName: string) => {
+    toast({
+      title: "Редактирование пользователя",
+      description: `Открываю форму редактирования для ${userName}`,
+    });
+  };
+
+  const handleAddUser = () => {
+    toast({
+      title: "Добавление пользователя",
+      description: "Открываю форму для добавления нового HR-менеджера.",
     });
   };
 
@@ -89,7 +111,9 @@ const HrSettings = () => {
                 onChange={(e) => setApiKey(e.target.value)}
                 className="flex-1"
               />
-              <Button variant="outline">Сгенерировать</Button>
+              <Button variant="outline" onClick={handleGenerateApiKey}>
+                Сгенерировать
+              </Button>
             </div>
           </div>
 
@@ -137,7 +161,7 @@ const HrSettings = () => {
               { name: 'Анна Помощник', email: 'anna.assistant@company.com', role: 'Менеджер', status: 'active' },
               { name: 'Петр Аналитик', email: 'petr.analytics@company.com', role: 'Аналитик', status: 'inactive' }
             ].map((user, index) => (
-              <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+              <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition-shadow">
                 <div>
                   <h3 className="font-medium">{user.name}</h3>
                   <p className="text-sm text-gray-600">{user.email}</p>
@@ -147,12 +171,22 @@ const HrSettings = () => {
                   <Badge variant={user.status === 'active' ? 'default' : 'secondary'}>
                     {user.status === 'active' ? 'Активен' : 'Неактивен'}
                   </Badge>
-                  <Button variant="outline" size="sm">Изменить</Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleEditUser(user.name)}
+                  >
+                    Изменить
+                  </Button>
                 </div>
               </div>
             ))}
             
-            <Button variant="outline" className="w-full">
+            <Button 
+              variant="outline" 
+              className="w-full hover:shadow-md transition-shadow"
+              onClick={handleAddUser}
+            >
               Добавить пользователя
             </Button>
           </div>
