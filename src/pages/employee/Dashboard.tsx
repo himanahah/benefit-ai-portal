@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { benefitCategories, userAllocations, recentTransactions } from '@/data/mockData';
 import { formatNumber } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import { PersonalRecommendations } from '@/components/employee/PersonalRecommendations';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -175,6 +176,9 @@ const Dashboard = () => {
             <Button variant="outline" className="w-full mt-4" onClick={() => navigate('/employee/history')}>
               Посмотреть всю историю
             </Button>
+            <Button variant="outline" className="w-full mt-2" onClick={() => navigate('/employee/recommendations')}>
+              🤖 Все рекомендации
+            </Button>
           </CardContent>
         </Card>
 
@@ -200,6 +204,9 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Персональные рекомендации */}
+      <PersonalRecommendations />
 
       <div className="flex items-center gap-4 cursor-pointer mb-6" onClick={() => navigate('/') }>
         <div className="w-8 h-8 bg-gradient-to-br from-[#6AFCBA] to-[#B6D9FC] rounded-lg flex items-center justify-center text-white font-bold">B</div>

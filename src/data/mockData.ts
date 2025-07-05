@@ -493,3 +493,183 @@ export const recentTransactions: Transaction[] = [
     status: 'failed',
   },
 ];
+
+// Мок-данные для истории покупок
+export interface PurchaseHistory {
+  id: string;
+  categoryId: string;
+  benefitName: string;
+  amount: number;
+  points: number;
+  date: Date;
+  frequency: number;
+  lastPurchase: Date;
+  satisfaction: number;
+  department: string;
+}
+
+export const mockPurchaseHistory: PurchaseHistory[] = [
+  {
+    id: '1',
+    categoryId: 'transport',
+    benefitName: 'Такси',
+    amount: 2500,
+    points: 2500,
+    date: new Date('2024-12-15'),
+    frequency: 12,
+    lastPurchase: new Date('2024-12-15'),
+    satisfaction: 4,
+    department: 'Разработка'
+  },
+  {
+    id: '2',
+    categoryId: 'food',
+    benefitName: 'Обеды в офисе',
+    amount: 1800,
+    points: 1800,
+    date: new Date('2024-12-14'),
+    frequency: 45,
+    lastPurchase: new Date('2024-12-14'),
+    satisfaction: 5,
+    department: 'Разработка'
+  },
+  {
+    id: '3',
+    categoryId: 'transport',
+    benefitName: 'Топливо',
+    amount: 5000,
+    points: 5000,
+    date: new Date('2024-12-10'),
+    frequency: 8,
+    lastPurchase: new Date('2024-12-10'),
+    satisfaction: 4,
+    department: 'Разработка'
+  },
+  {
+    id: '4',
+    categoryId: 'health',
+    benefitName: 'Массаж',
+    amount: 3000,
+    points: 3000,
+    date: new Date('2024-11-20'),
+    frequency: 2,
+    lastPurchase: new Date('2024-11-20'),
+    satisfaction: 5,
+    department: 'Разработка'
+  },
+  {
+    id: '5',
+    categoryId: 'education',
+    benefitName: 'Онлайн курсы',
+    amount: 15000,
+    points: 15000,
+    date: new Date('2024-10-15'),
+    frequency: 1,
+    lastPurchase: new Date('2024-10-15'),
+    satisfaction: 3,
+    department: 'Разработка'
+  }
+];
+
+// Структура рекомендаций
+export interface Recommendation {
+  id: string;
+  type: 'frequent' | 'similar' | 'department' | 'new' | 'seasonal' | 'budget';
+  categoryId: string;
+  title: string;
+  description: string;
+  confidence: number;
+  priority: 'high' | 'medium' | 'low';
+  actionType: 'suggest' | 'warn' | 'optimize';
+  data: {
+    expectedSavings?: number;
+    usageTrend?: number;
+    similarUsers?: number;
+    deadline?: Date;
+    reason: string;
+  };
+  price: number;
+  points: number;
+}
+
+// Мок-данные для рекомендаций
+export const mockRecommendations: Recommendation[] = [
+  {
+    id: '1',
+    type: 'frequent',
+    categoryId: 'transport',
+    title: 'Такси - ваша любимая льгота',
+    description: 'Вы часто используете такси. Попробуйте премиум-тариф для большего комфорта.',
+    confidence: 95,
+    priority: 'high',
+    actionType: 'suggest',
+    data: {
+      usageTrend: 12,
+      reason: 'Покупали 12 раз за последние 3 месяца'
+    },
+    price: 3000,
+    points: 3000
+  },
+  {
+    id: '2',
+    type: 'department',
+    categoryId: 'food',
+    title: 'Популярно в вашем отделе',
+    description: '85% ваших коллег используют доставку обедов. Присоединяйтесь!',
+    confidence: 87,
+    priority: 'medium',
+    actionType: 'suggest',
+    data: {
+      similarUsers: 85,
+      reason: '85% коллег из отдела Разработка используют эту льготу'
+    },
+    price: 2000,
+    points: 2000
+  },
+  {
+    id: '3',
+    type: 'new',
+    categoryId: 'entertainment',
+    title: 'Новое предложение - кинотеатр',
+    description: 'Вы еще не пробовали льготы развлечений. Специальное предложение!',
+    confidence: 78,
+    priority: 'medium',
+    actionType: 'suggest',
+    data: {
+      reason: 'Вы не использовали льготы категории "Развлечения"'
+    },
+    price: 1500,
+    points: 1500
+  },
+  {
+    id: '4',
+    type: 'seasonal',
+    categoryId: 'health',
+    title: 'Зимняя забота о здоровье',
+    description: 'В холодное время года особенно важно укреплять иммунитет.',
+    confidence: 82,
+    priority: 'medium',
+    actionType: 'suggest',
+    data: {
+      reason: 'Сезонная рекомендация для укрепления здоровья'
+    },
+    price: 4000,
+    points: 4000
+  },
+  {
+    id: '5',
+    type: 'budget',
+    categoryId: 'education',
+    title: 'Экономьте баллы на обучении',
+    description: 'У вас осталось много баллов. Инвестируйте в свое развитие!',
+    confidence: 91,
+    priority: 'high',
+    actionType: 'optimize',
+    data: {
+      expectedSavings: 2000,
+      reason: 'Эффективное использование оставшихся баллов'
+    },
+    price: 8000,
+    points: 8000
+  }
+];

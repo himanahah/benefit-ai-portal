@@ -23,6 +23,7 @@ import UsageHistory from "./pages/employee/UsageHistory";
 import SupportTickets from "./pages/employee/SupportTickets";
 import EmployeeSettings from "./pages/employee/Settings";
 import Satisfaction from './pages/employee/Satisfaction';
+import Recommendations from './pages/employee/Recommendations';
 
 // HR pages
 import HrLayout from "./pages/hr/HrLayout";
@@ -65,6 +66,7 @@ const App = () => (
               <Route path="support" element={<SupportTickets />} />
               <Route path="settings" element={<EmployeeSettings />} />
               <Route path="satisfaction" element={<Satisfaction />} />
+              <Route path="recommendations" element={<Recommendations />} />
             </Route>
             
             {/* HR routes */}

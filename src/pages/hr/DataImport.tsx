@@ -106,7 +106,7 @@ const DataImport = () => {
     };
 
     setJobs(prev => [newJob, ...prev]);
-
+    
     // Имитация обработки файла на сервере
     setTimeout(() => {
       setJobs(prev => prev.map(job => 

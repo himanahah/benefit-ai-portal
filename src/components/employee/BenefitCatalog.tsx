@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { benefitCategories } from '@/data/mockData';
+import { benefitCategories, mockRecommendations } from '@/data/mockData';
 import { formatNumber } from '@/lib/utils';
 
 export function BenefitCatalog() {
@@ -11,7 +11,9 @@ export function BenefitCatalog() {
   try {
     const saved = localStorage.getItem('benefit-allocations');
     if (saved) allocations = JSON.parse(saved);
-  } catch {}
+  } catch (error) {
+    console.log('Ошибка загрузки лимитов:', error);
+  }
   const [selected, setSelected] = useState(null);
   return (
     <div className="space-y-6">
@@ -115,6 +117,42 @@ export function BenefitCatalog() {
           </div>
         </div>
       )}
+
+      {/* Рекомендуемые льготы */}
+      <Card>
+        <CardHeader>
+          <CardTitle>💡 Рекомендуемые для вас</CardTitle>
+          <CardDescription>На основе вашей истории покупок</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {mockRecommendations.slice(0, 3).map((rec) => {
+              const category = benefitCategories.find(c => c.id === rec.categoryId);
+              return (
+                <Card key={rec.id} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">{category?.icon}</span>
+                        <Badge variant="outline" className="text-xs">
+                          {rec.confidence}% совпадение
+                        </Badge>
+                      </div>
+                      <span className="text-sm text-gray-500">{formatNumber(rec.points)} баллов</span>
+                    </div>
+                    <h4 className="font-medium mb-1">{rec.title}</h4>
+                    <p className="text-sm text-gray-600 mb-3">{rec.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-green-600">{formatNumber(rec.price)} ₽</span>
+                      <Button size="sm">Попробовать</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

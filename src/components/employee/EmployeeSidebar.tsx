@@ -13,6 +13,7 @@ const menuItems = [
   { id: 'history', label: 'История', icon: '📊', path: '/employee/history' },
   { id: 'support', label: 'Поддержка', icon: '💬', path: '/employee/support' },
   { id: 'satisfaction', label: 'Оценка сервиса', icon: '⭐', path: '/employee/satisfaction' },
+  { id: 'recommendations', label: 'Рекомендации', icon: '🤖', path: '/employee/recommendations' },
   { id: 'settings', label: 'Настройки', icon: '⚙️', path: '/employee/settings' },
 ];
 
