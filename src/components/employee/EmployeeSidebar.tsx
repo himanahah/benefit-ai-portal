@@ -12,7 +12,7 @@ const menuItems = [
   { id: 'allocate', label: 'Распределить баллы', icon: '⚖️', path: '/employee/allocate' },
   { id: 'history', label: 'История', icon: '📊', path: '/employee/history' },
   { id: 'support', label: 'Поддержка', icon: '💬', path: '/employee/support' },
-  { id: 'satisfaction', label: 'Удовлетворенность', icon: () => (<span className='text-2xl' style={{color:'#6AFCBA'}}>🙂</span>), path: '/employee/satisfaction' },
+  { id: 'satisfaction', label: 'Оценка сервиса', icon: '⭐', path: '/employee/satisfaction' },
   { id: 'settings', label: 'Настройки', icon: '⚙️', path: '/employee/settings' },
 ];
 

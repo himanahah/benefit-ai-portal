@@ -16,7 +16,7 @@ const Dashboard = () => {
   const remainingPoints = user?.pointsBalance || 0;
 
   // Calculate days until next reset (mock data)
-  const nextResetDate = new Date('2024-07-01');
+  const nextResetDate = new Date('2025-01-01');
   const today = new Date();
   const daysUntilReset = Math.ceil((nextResetDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
 
@@ -194,7 +194,7 @@ const Dashboard = () => {
               </div>
               <div className="p-3 bg-orange-100 rounded-lg">
                 <p className="font-medium">До обновления осталось {Math.abs(daysUntilReset)} дней</p>
-                <p className="text-sm">Рекомендуем использовать баллы до 1 июля</p>
+                <p className="text-sm">Рекомендуем использовать баллы до 1 января 2025</p>
               </div>
             </div>
           </CardContent>
