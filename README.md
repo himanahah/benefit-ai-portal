@@ -9,7 +9,7 @@
 - **Frontend**: React 18 + TypeScript + Vite
 - **Backend**: Node.js + Express + TypeScript  
 - **Database**: PostgreSQL 15 + Redis
-- **DevOps**: Docker + GitHub Actions
+- **DevOps**: GitHub Actions
 
 📖 **Подробная документация по архитектуре:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - здесь вы найдете детальные диаграммы UML/ERD, принципы архитектуры, схемы базы данных и технологический стек.
 
