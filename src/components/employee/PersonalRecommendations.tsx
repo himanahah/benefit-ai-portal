@@ -26,30 +26,22 @@ export function PersonalRecommendations() {
   });
   const [loading, setLoading] = useState(true);
 
-  // Имитация загрузки данных из PostgreSQL
+  // Загрузка данных
   useEffect(() => {
     const loadRecommendations = async () => {
       setLoading(true);
       
-      // Имитируем запрос к PostgreSQL
-      console.log('🔍 Запрос к PostgreSQL: SELECT * FROM recommendations WHERE user_id = ?');
-      console.log('📊 Анализ истории покупок пользователя...');
-      console.log('🤖 Генерация персональных рекомендаций...');
-      
       // Имитация задержки сети
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      // Сохраняем в localStorage (но делаем вид что это PostgreSQL)
+      // Загружаем историю из localStorage
       const userHistory = localStorage.getItem('user-purchase-history');
       if (!userHistory) {
         localStorage.setItem('user-purchase-history', JSON.stringify(mockPurchaseHistory));
-        console.log('💾 Сохранение истории покупок в PostgreSQL...');
       }
       
       setRecommendations(mockRecommendations);
       setLoading(false);
-      
-      console.log('✅ Рекомендации успешно загружены из PostgreSQL');
     };
 
     loadRecommendations();
@@ -66,8 +58,6 @@ export function PersonalRecommendations() {
 
   // Обработчики действий с рекомендациями
   const handleLike = async (rec: Recommendation) => {
-    console.log('💾 Сохранение в PostgreSQL: UPDATE recommendations SET user_feedback = "liked" WHERE id = ?', rec.id);
-    
     // Сохраняем в localStorage
     const feedback = JSON.parse(localStorage.getItem('recommendation-feedback') || '{}');
     feedback[rec.id] = 'liked';
@@ -80,8 +70,6 @@ export function PersonalRecommendations() {
   };
 
   const handleDislike = async (rec: Recommendation) => {
-    console.log('💾 Сохранение в PostgreSQL: UPDATE recommendations SET user_feedback = "disliked" WHERE id = ?', rec.id);
-    
     // Сохраняем в localStorage
     const feedback = JSON.parse(localStorage.getItem('recommendation-feedback') || '{}');
     feedback[rec.id] = 'disliked';
@@ -94,8 +82,6 @@ export function PersonalRecommendations() {
   };
 
   const handlePurchase = async (rec: Recommendation) => {
-    console.log('💾 Сохранение в PostgreSQL: INSERT INTO purchases (user_id, recommendation_id, amount) VALUES (?, ?, ?)');
-    
     toast({
       title: "Покупка оформлена!",
       description: `Льгота "${rec.title}" добавлена в корзину.`,
